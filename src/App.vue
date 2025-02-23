@@ -17,7 +17,7 @@ import HomeFooter from './components/HomeFooter.vue'
 .page{
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 51px);
+  height: calc(100vh - 50px);
 
   .view{
     flex: 1;

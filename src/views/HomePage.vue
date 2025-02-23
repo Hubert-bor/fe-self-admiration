@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <!-- <ChatAI /> -->
-    <div class="wrapper">
+    <!-- <div class="wrapper">
       <div class="link">
         <a href="https://heydesign.systems/" target="_blank">新手设计系统资料库</a>
       </div>
@@ -9,7 +9,8 @@
       <div class="link">
         <a href="https://andreasbm.github.io/web-skills/" target="_blank">互联网技能树</a>
       </div>
-    </div>
+    </div> -->
+    
   </div>
 </template>
 
