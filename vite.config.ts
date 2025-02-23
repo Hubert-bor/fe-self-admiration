@@ -4,14 +4,11 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    vueDevTools(),
-  ],
+  plugins: [vue(), vueJsx(), vueDevTools(), tailwindcss()],
   base: './',
   resolve: {
     alias: {
@@ -19,6 +16,8 @@ export default defineConfig({
     }
   },
   server: {
+    port: 8000,
+    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8080/api',
@@ -26,5 +25,5 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
-  },
+  }
 })

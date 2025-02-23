@@ -1,24 +1,24 @@
-//eslint.config.js
-/** @type {import('eslint').Linter.Config[]} */
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-export default [
-  //...
+// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
+// import { configureVueProject } from '@vue/eslint-config-typescript'
+// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
+// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+
+export default defineConfigWithVueTs(
   {
-    ignores: [
-      '**/node_modules',
-      '**/public',
-      '**/assets',
-      '**/dist',
-      '**/package-lock.json',
-      '**/yarn.lock',
-      '**/pnpm-lock.yaml',
-      '**/.history',
-      '**/CHANGELOG*.md',
-      '**/*.min.*',
-      '**/LICENSE*',
-      '**/__snapshots__',
-      '**/auto-import?(s).d.ts',
-      '**/components.d.ts'
-    ]
-  }
-]
+    name: 'app/files-to-lint',
+    files: ['**/*.{ts,mts,tsx,vue}'],
+  },
+
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+  },
+
+  pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
+  skipFormatting,
+)
