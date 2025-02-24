@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",
+    "@vueuse/core": "^12.7.0",
     "pinia": "^2.1.7",
     "stats.js": "^0.17.0",
     "three": "^0.173.0",

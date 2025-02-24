@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomePage from '@/views/HomePage.vue'
-import ThreeDWordCloud from '@/views/ThreeDWordCloud.vue'
-console.log('import.meta', import.meta)
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -9,12 +7,22 @@ const router = createRouter({
       path: '/',
       name: 'home',
       redirect: '/wordCloud'
-      // component: HomePage
+      // component: () => import('@/views/HomePage.vue')
     },
     {
       path: '/wordCloud',
       name: 'wordCloud',
-      component: ThreeDWordCloud
+      component: () => import('@/views/ThreeDWordCloud.vue')
+    },
+    {
+      path: '/hoist',
+      name: 'hoist',
+      component: () => import('@/views/hoist/index.vue')
+    },
+    {
+      path: '/foo',
+      name: 'foo',
+      component: () => import('@/views/hoist/FooCmp.vue')
     }
   ]
 })
