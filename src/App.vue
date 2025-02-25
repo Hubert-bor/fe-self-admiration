@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <TheNav />
     <div class="view">
       <RouterView />
 
@@ -12,7 +13,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import HomeFooter from './components/HomeFooter.vue'
-
+import TheNav from './components/TheNav.vue'
 import { TheImageContainer } from './composables/image'
 </script>
 
@@ -24,6 +25,14 @@ import { TheImageContainer } from './composables/image'
 
   .view {
     flex: 1;
+  }
+
+  :deep([class^='icon-']) {
+    font-size: 1.3em;
+    &:hover {
+      color: #0d9488;
+      cursor: pointer;
+    }
   }
 }
 

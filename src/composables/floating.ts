@@ -9,11 +9,18 @@ import {
   onMounted,
   reactive,
   ref,
+  Teleport,
   useAttrs,
-  watchEffect
+  watch
 } from 'vue'
 
-export function createFloating<T extends Component>(component: Component) {
+export interface FloatingOptions {
+  duration?: number
+}
+
+export function createFloating<T extends Component>(component: T, options: FloatingOptions = {}) {
+  const { duration = 500 } = options
+
   const metadata = reactive<any>({
     props: {},
     attrs: {}
@@ -29,6 +36,8 @@ export function createFloating<T extends Component>(component: Component) {
       const style = computed((): StyleValue => {
         const fixed: StyleValue = {
           transition: 'all .5s ease-in-out',
+          transitionDuration: `${duration}ms`,
+
           position: 'fixed'
         }
 
@@ -59,7 +68,34 @@ export function createFloating<T extends Component>(component: Component) {
       // useEventListener('reset', update)
       // watchEffect(update)
 
-      return () => h('div', { style: style.value }, [h(component, metadata.attrs)])
+      const landed = ref(false)
+      let loading: any
+
+      function liftOff() {
+        landed.value = false
+      }
+
+      function land() {
+        landed.value = true
+      }
+
+      watch(proxyEl, (el) => {
+        liftOff()
+        if (el) {
+          clearTimeout(loading)
+          loading = setTimeout(() => {
+            land()
+          }, duration)
+        }
+      })
+
+      return () => {
+        const children = [h(component, metadata.attrs)]
+
+        return landed.value && proxyEl.value
+          ? h(Teleport, { to: proxyEl.value }, children)
+          : h('div', { style: style.value }, children)
+      }
     }
   })
 
