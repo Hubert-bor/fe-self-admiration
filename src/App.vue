@@ -3,9 +3,7 @@
     <div class="view">
       <RouterView />
 
-      <FloatContainer v-slot="props">
-        <TheImage v-bind="props" />
-      </FloatContainer>
+      <TheImageContainer />
     </div>
   </div>
   <HomeFooter />
@@ -14,8 +12,8 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import HomeFooter from './components/HomeFooter.vue'
-import FloatContainer from '@/views/hoist/components/FloatContainer.vue'
-import TheImage from '@/views/hoist/components/TheImage.vue'
+
+import { TheImageContainer } from './composables/image'
 </script>
 
 <style scoped>

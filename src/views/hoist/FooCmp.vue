@@ -7,8 +7,8 @@
       <button class="btn" @click="reset">Reset</button>
     </div>
 
-    <div class="m-10 flex sm:flex-col gap-4 items-center">
-      <FloatProxy
+    <div class="m-10 flex flex-col sm:flex-row gap-4 items-center">
+      <TheImageProxy
         class="w-[60px] h-[60px] rounded-full shrink-0"
         :style="{ width: size + 'px', height: size + 'px' }"
       />
@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts" setup>
-import FloatProxy from '@/views/hoist/components/FloatProxy.vue'
 import { useStorage } from '@vueuse/core'
 import { ref } from 'vue'
+import { TheImageProxy } from '@/composables/image'
 
 const size = ref(useStorage('size', 100))
 
