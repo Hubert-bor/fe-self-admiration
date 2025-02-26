@@ -3,8 +3,7 @@
     <TheNav />
     <div class="view">
       <RouterView />
-
-      <TheImageContainer />
+      <!-- <TheImageContainer /> -->
     </div>
   </div>
   <HomeFooter />
@@ -14,7 +13,7 @@
 import { RouterView } from 'vue-router'
 import HomeFooter from './components/HomeFooter.vue'
 import TheNav from './components/TheNav.vue'
-import { TheImageContainer } from './composables/image'
+// import { TheImageContainer } from './composables/image'
 </script>
 
 <style scoped>
@@ -25,6 +24,7 @@ import { TheImageContainer } from './composables/image'
 
   .view {
     flex: 1;
+    overflow-x: overlay;
   }
 
   :deep([class^='icon-']) {

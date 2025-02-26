@@ -10,7 +10,7 @@ body,
 
 html.dark {
   background: #121212;
-  color:#e5e7eb
+  color:#e5e7eb !important;
 }
 
 .page-fade-enter-active,

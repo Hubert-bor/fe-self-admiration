@@ -6,8 +6,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      redirect: '/hoist'
-      // component: () => import('@/views/HomePage.vue')
+      // redirect: '/hoist'
+      component: () => import('@/views/HomePage.vue')
     },
     {
       path: '/wordCloud',
