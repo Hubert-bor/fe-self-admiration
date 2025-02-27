@@ -9,5 +9,6 @@
 div {
   text-align: center;
   line-height: 50px;
+  font-size: 12px;
 }
 </style>

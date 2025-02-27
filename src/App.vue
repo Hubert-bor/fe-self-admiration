@@ -2,7 +2,9 @@
   <div class="page">
     <TheNav />
     <div class="view">
-      <RouterView />
+      <ConfigProvider :theme="theme">
+        <RouterView />
+      </ConfigProvider>
       <!-- <TheImageContainer /> -->
     </div>
   </div>
@@ -13,7 +15,9 @@
 import { RouterView } from 'vue-router'
 import HomeFooter from './components/HomeFooter.vue'
 import TheNav from './components/TheNav.vue'
+import { ConfigProvider } from 'ant-design-vue'
 // import { TheImageContainer } from './composables/image'
+import theme from './utils/theme'
 </script>
 
 <style scoped>
@@ -23,7 +27,6 @@ import TheNav from './components/TheNav.vue'
   height: calc(100vh - 50px);
 
   .view {
-    flex: 1;
     overflow-x: overlay;
   }
 

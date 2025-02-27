@@ -11,7 +11,7 @@
       </div>
     </div> -->
 
-    <List size="small" :data-source="questionList" bordered>
+    <List size="small" :loading="listLoading" :data-source="questionList" bordered>
       <template #renderItem="{ item }">
         <ListItem :key="`a-${item.id}`">
           <!-- <template #actions><a>View Profile</a></template> -->
@@ -19,7 +19,7 @@
             <template #description>
               <div v-for="(q, idx) in item.children" :key="q.id">
                 <span class="title-linear-gradient">
-                  {{ ++idx + '、' + q.title }}
+                  {{ `${idx + 1}、${q.title}` }}
                 </span>
               </div>
             </template>
@@ -52,7 +52,7 @@ interface Question {
   updatedAt: string
 }
 
-const iconMap = {
+const iconMap: any = {
   Vite: 'icon-[devicon--vitejs]',
   TS: 'icon-[vscode-icons--file-type-typescriptdef]',
   Other: 'icon-[basil--other-1-outline]',
@@ -65,7 +65,8 @@ const iconMap = {
   React: 'icon-[devicon--react]'
 }
 
-const questionList = ref<Question>([])
+const questionList = ref<any[]>([])
+const listLoading = ref(false)
 
 /**
  * @description: 根据类型分组问题列表
@@ -81,14 +82,13 @@ const groupByType = (list: Question[]) => {
     result[item.type].push(item)
   })
 
-  console.log('result', result)
   return result
 }
 
 /**
  * @description: 将分类数据处理为list组件所需要的数据格式
  */
-const formatData = (data: Record<string, Question[]>) => {
+const formatData = (data: Record<string, Question[]>): any[] => {
   return Object.entries(data).map(([type, questions]) => ({
     name: type,
     children: questions
@@ -96,8 +96,13 @@ const formatData = (data: Record<string, Question[]>) => {
 }
 
 onMounted(async () => {
-  const res = await fetchInterviewQuestions()
-  questionList.value = formatData(groupByType(res.data))
+  listLoading.value = true
+  try {
+    const res = await fetchInterviewQuestions()
+    questionList.value = formatData(groupByType(res.data))
+  } finally {
+    listLoading.value = false
+  }
 })
 </script>
 
