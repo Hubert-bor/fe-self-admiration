@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 // import ChatAI from './ChatAI.vue'
-import { fetchInterviewQuestions, fetchInterviewTypes } from '@/api'
+import { fetchInterviewQuestions } from '@/api'
 import { List, ListItemMeta, ListItem } from 'ant-design-vue'
 
 import { ref, onMounted } from 'vue'
@@ -58,15 +58,25 @@ interface Question {
   updatedAt: string
 }
 
-interface QuestionType {
-  id: number
-  type: string
-  iconType: string
-}
-
 const router = useRouter()
 
-const iconMap: any = ref<Record<string, QuestionType>>({})
+const iconMap: any = {
+  Vue: 'icon-[logos--vue]',
+  JS: 'icon-[vscode-icons--file-type-js]',
+  TS: 'icon-[vscode-icons--file-type-typescriptdef]',
+  HTML: 'icon-[devicon--html5]',
+  CSS: 'icon-[devicon--css3-plain]',
+  Vite: 'icon-[devicon--vitejs]',
+  Other: 'icon-[basil--other-1-outline]',
+  Engineering: 'icon-[flat-color-icons--engineering]',
+  HandWriting: 'icon-[emojione--pencil]',
+  Network: 'icon-[emojione-v1--three-networked-computers]',
+  Project: 'icon-[fa6-solid--diagram-project]',
+  Optimization: 'icon-[carbon--promote]',
+  Visualization: 'icon-[flat-color-icons--combo-chart]',
+  React: 'icon-[devicon--react]'
+}
+
 const questionList = ref<any[]>([])
 const listLoading = ref(false)
 
@@ -101,14 +111,14 @@ const formatData = (data: Record<string, Question[]>): any[] => {
 * @description: 将面试题类型数据转为图标映射表
 
 */
-const formatIconMap = (data: QuestionType[]) => {
-  const map: Record<string, string> = {}
-  data.forEach((item) => {
-    map[item.type] = item.iconType
-  })
+// const formatIconMap = (data: QuestionType[]) => {
+//   const map: Record<string, string> = {}
+//   data.forEach((item) => {
+//     map[item.type] = item.iconType
+//   })
 
-  return map
-}
+//   return map
+// }
 
 /**
  * @description: 获取面试题数据
@@ -126,15 +136,12 @@ const fetchData = async () => {
 /**
  * @description: 获取面试题类型数据
  */
-const getTypeList = async () => {
-  const res = await fetchInterviewTypes()
-  iconMap.value = formatIconMap(res.data)
-}
+// const getTypeList = async () => {
+//   const res = await fetchInterviewTypes()
+//   iconMap.value = formatIconMap(res.data)
+// }
 
-onMounted(() => {
-  getTypeList()
-  fetchData()
-})
+onMounted(fetchData)
 </script>
 
 <style lang="less" scoped>

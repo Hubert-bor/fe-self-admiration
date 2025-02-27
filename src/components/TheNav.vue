@@ -28,7 +28,7 @@
 
       <button class="icon-btn !outline-none" @click="toggleDark()">
         <div v-if="isDark" class="icon-[solar--moon-outline]" />
-        <div v-else class="icon-[flowbite--sun-outline]" />
+        <div v-else class="icon-[flowbite--sun-outline] mt-[3px]" />
       </button>
     </div>
   </nav>

@@ -5,18 +5,19 @@
 <script lang="ts" setup>
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
+import { saveSvgStr } from '@/views/Question/AddQuestion/save'
 
 import { onMounted, onUnmounted } from 'vue'
-import IOptions from 'vditor'
-import { saveSvgStr } from '@/views/Question/AddQuestion/save'
+
+const emits = defineEmits(['save-handler'])
 
 const isMobile = window.innerWidth < 960
 let vditor: any
 
 const initVditor = () => {
-  const options: IOptions = {
+  const options = {
     width: '100%',
-    height: 'calc(100vh - 175px)',
+    height: 'calc(100vh - 190px)',
     tab: '\t',
     counter: '999999',
     typewriterMode: true,
@@ -65,24 +66,14 @@ const initVditor = () => {
         icon: saveSvgStr,
         click() {
           const value = vditor.getValue()
-          console.log('value', value)
+          emits('save-handler', value)
         }
       }
     ],
     outline: true
-    // upload: {
-    //   max: 5 * 1024 * 1024,
-    //   handler(file: any) {
-    //     const formData = new FormData()
-    //     console.log('formData', formData)
-    //     for (const i in file) {
-    //       formData.append('smfile', file[i])
-    //     }
-    //   }
-    // }
   }
 
-  vditor = new Vditor('vditor', options) as any
+  vditor = new Vditor('vditor', options as any)
   console.log('vditor.value', vditor)
 }
 
