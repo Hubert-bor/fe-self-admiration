@@ -10,6 +10,12 @@ import { saveSvgStr } from '@/views/Question/AddQuestion/save'
 import { onMounted, onUnmounted } from 'vue'
 
 const emits = defineEmits(['save-handler'])
+const props = defineProps({
+  defaultValue: {
+    type: String,
+    default: ''
+  }
+})
 
 const isMobile = window.innerWidth < 960
 let vditor: any
@@ -70,11 +76,15 @@ const initVditor = () => {
         }
       }
     ],
+    after() {
+      if (props.defaultValue) {
+        vditor.setValue(props.defaultValue)
+      }
+    },
     outline: true
   }
 
   vditor = new Vditor('vditor', options as any)
-  console.log('vditor.value', vditor)
 }
 
 onMounted(initVditor)

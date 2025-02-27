@@ -23,7 +23,10 @@
           <ListItemMeta>
             <template #description>
               <div v-for="(q, idx) in item.children" :key="q.id">
-                <span class="title-linear-gradient">
+                <span
+                  class="title-linear-gradient"
+                  @click="router.push({ path: '/questionDetail', query: { qId: q.id } })"
+                >
                   {{ `${idx + 1}、${q.title}` }}
                 </span>
               </div>

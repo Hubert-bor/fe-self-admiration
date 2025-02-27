@@ -19,26 +19,40 @@
     </div>
     <!-- 编辑器 -->
     <div class="editor-wrapper">
-      <Editor @save-handler="addQuestion" />
+      <Editor @save-handler="saveQuestion" :defaultValue="defaultValue" />
     </div>
   </Spin>
 </template>
 
 <script lang="ts" setup>
-import { addInterviewQuestion } from '@/api'
+import { addInterviewQuestion, updateInterviewQuestion } from '@/api'
 import Editor from '@/components/Editor/index.vue'
 import { Input, message, Spin } from 'ant-design-vue'
 import dayjs from 'dayjs'
 
-import { nextTick, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
+interface Question {
+  id: number
+  title: string
+  type: string
+  answer: string
+  createdAt?: string
+  updatedAt: string
+}
+
+const QUESTION_LOCAL_ID = 'question-detail-info'
+
 const inputRef = ref()
+const defaultValue = ref('')
+
+const route = useRoute()
 const titleValue = ref('')
 const cacheTitle = ref('请输入标题')
 const isEditor = ref(false)
 const submitLoading = ref(false)
+const detailInfo = ref<Partial<Question>>({})
 
 /**
  * @description: 失去焦点时保存标题
@@ -62,13 +76,23 @@ const transformEditor = async () => {
   inputRef.value?.focus()
 }
 
-const addQuestion = async (editorValue: string) => {
-  console.log('editorValue', editorValue)
+const saveQuestion = async (editorValue: string) => {
   if (!titleValue.value) return message.warn('请输入标题')
   if (!editorValue || editorValue === '\n') return message.warn('请输入答案')
 
   submitLoading.value = true
   try {
+    if (route.query.state === 'edit') {
+      await updateInterviewQuestion({
+        id: detailInfo.value.id,
+        title: titleValue.value,
+        answer: editorValue,
+        type: detailInfo.value.type,
+        updatedAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+      })
+      return message.success('修改成功')
+    }
+
     await addInterviewQuestion({
       title: titleValue.value,
       type: route.query.type as string,
@@ -81,6 +105,23 @@ const addQuestion = async (editorValue: string) => {
     submitLoading.value = false
   }
 }
+
+onBeforeUnmount(() => {
+  localStorage.removeItem(QUESTION_LOCAL_ID)
+})
+
+onMounted(() => {
+  const hasDetailInfo = localStorage.getItem(QUESTION_LOCAL_ID)
+  if (hasDetailInfo) {
+    try {
+      detailInfo.value = JSON.parse(hasDetailInfo)
+      titleValue.value = detailInfo.value.title as string
+      defaultValue.value = detailInfo.value.answer as string
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+})
 </script>
 
 <style lang="less" scoped>

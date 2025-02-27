@@ -1,4 +1,4 @@
-import { get, post } from '../utils/http' // 导入封装好的 http.js
+import { get, post, put } from '../utils/http' // 导入封装好的 http.js
 
 /**
  * @description: 获取面试题列表
@@ -15,10 +15,11 @@ export function fetchInterviewTypes() {
 }
 
 interface Question {
+  id?: number
   title: string
-  type: string
+  type?: string
   answer: string
-  createdAt: string
+  createdAt?: string
   updatedAt: string
 }
 
@@ -27,4 +28,18 @@ interface Question {
  */
 export function addInterviewQuestion(data: Question) {
   return post('/api/addQuestion', data)
+}
+
+/**
+ * @description: 根据 id 查询面试题
+ */
+export function fetchInterviewQuestionById(id: string) {
+  return get(`/api/findQuestionById/${id}`)
+}
+
+/**
+ * @description: 更新面试题
+ */
+export function updateInterviewQuestion(data: Question) {
+  return put('/api/updateQuestion', data)
 }
