@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/bar',
       name: 'bar',
       component: () => import('@/views/hoist/BarCmp.vue')
+    },
+    {
+      path: '/add',
+      name: 'add',
+      component: () => import('@/views/Question/AddQuestion/index.vue')
     }
   ]
 })
