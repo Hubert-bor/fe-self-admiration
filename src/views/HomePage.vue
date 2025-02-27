@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 // import ChatAI from './ChatAI.vue'
-import { fetchInterviewQuestions } from '@/api'
+import { fetchInterviewQuestions, fetchInterviewTypes } from '@/api'
 import { List, ListItemMeta, ListItem } from 'ant-design-vue'
 
 import { ref, onMounted } from 'vue'
@@ -52,19 +52,13 @@ interface Question {
   updatedAt: string
 }
 
-const iconMap: any = {
-  Vite: 'icon-[devicon--vitejs]',
-  TS: 'icon-[vscode-icons--file-type-typescriptdef]',
-  Other: 'icon-[basil--other-1-outline]',
-  HTML: 'icon-[devicon--html5]',
-  Vue: 'icon-[logos--vue]',
-  Engineering: 'icon-[flat-color-icons--engineering]',
-  JS: 'icon-[vscode-icons--file-type-js]',
-  HandWriting: 'icon-[emojione--pencil]',
-  CSS: 'icon-[devicon--css3-plain]',
-  React: 'icon-[devicon--react]'
+interface QuestionType {
+  id: number
+  type: string
+  iconType: string
 }
 
+const iconMap: any = ref<Record<string, QuestionType>>({})
 const questionList = ref<any[]>([])
 const listLoading = ref(false)
 
@@ -95,7 +89,23 @@ const formatData = (data: Record<string, Question[]>): any[] => {
   }))
 }
 
-onMounted(async () => {
+/**
+* @description: 将面试题类型数据转为图标映射表
+
+*/
+const formatIconMap = (data: QuestionType[]) => {
+  const map: Record<string, string> = {}
+  data.forEach((item) => {
+    map[item.type] = item.iconType
+  })
+
+  return map
+}
+
+/**
+ * @description: 获取面试题数据
+ */
+const fetchData = async () => {
   listLoading.value = true
   try {
     const res = await fetchInterviewQuestions()
@@ -103,6 +113,19 @@ onMounted(async () => {
   } finally {
     listLoading.value = false
   }
+}
+
+/**
+ * @description: 获取面试题类型数据
+ */
+const getTypeList = async () => {
+  const res = await fetchInterviewTypes()
+  iconMap.value = formatIconMap(res.data)
+}
+
+onMounted(() => {
+  getTypeList()
+  fetchData()
 })
 </script>
 
