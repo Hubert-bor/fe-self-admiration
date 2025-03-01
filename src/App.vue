@@ -25,6 +25,7 @@ import theme from './utils/theme'
   display: flex;
   flex-direction: column;
   height: calc(100vh - 50px);
+  color: #fff;
 
   .view {
     overflow-x: overlay;
@@ -32,8 +33,11 @@ import theme from './utils/theme'
 
   :deep([class^='icon-']) {
     font-size: 1.3em;
+    border-color: #fff;
+
     &:hover {
-      color: #0d9488;
+      /* color: #0d9488; */
+      color: #fff;
       cursor: pointer;
     }
   }

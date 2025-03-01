@@ -10,5 +10,7 @@ div {
   text-align: center;
   line-height: 50px;
   font-size: 12px;
+  color: #fff;
+  background-color: #101010;
 }
 </style>

@@ -10,9 +10,10 @@
         @blur="inputBlur"
       />
       <div v-else class="text-sm font-mono flex items-center justify-center">
-        <div class="mr-2 max-w-[300px] truncate">{{ titleValue || cacheTitle }}</div>
-        <div
-          class="icon-[uil--edit] cursor-pointer align-middle mt-[-3px]"
+        <div class="text-[#000] mr-2 max-w-[300px] truncate">{{ titleValue || cacheTitle }}</div>
+        <Icon
+          icon="mage:edit"
+          class="cursor-pointer align-middle text-[#000] mt-[-3px] text-xl hover:text-[#0d9488]"
           @click="transformEditor"
         />
       </div>
@@ -25,10 +26,11 @@
 </template>
 
 <script lang="ts" setup>
-import { addInterviewQuestion, updateInterviewQuestion } from '@/api'
 import Editor from '@/components/Editor/index.vue'
-import { Input, message, Spin } from 'ant-design-vue'
 import dayjs from 'dayjs'
+import { Icon } from '@iconify/vue'
+import { addInterviewQuestion, updateInterviewQuestion } from '@/api'
+import { Input, message, Spin } from 'ant-design-vue'
 
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'

@@ -7,7 +7,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       // redirect: '/hoist'
-      component: () => import('@/views/HomePage.vue')
+      // component: () => import('@/views/HomePage.vue')
+      component: () => import('@/views/HomePage/index.vue')
+    },
+    {
+      path: '/question',
+      name: 'question',
+      component: () => import('@/views/Question/index.vue')
     },
     {
       path: '/wordCloud',
@@ -38,6 +44,11 @@ const router = createRouter({
       path: '/questionDetail',
       name: 'questionDetail',
       component: () => import('@/views/Question/QuestionDetail/index.vue')
+    },
+    {
+      path: '/claudePage',
+      name: 'claudePage',
+      component: () => import('@/views/claude/index.vue')
     }
   ]
 })

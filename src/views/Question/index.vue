@@ -1,24 +1,18 @@
 <template>
   <div class="page-container p-6">
-    <!-- <ChatAI /> -->
-    <!-- <div class="wrapper">
-      <div class="link">
-        <a href="https://heydesign.systems/" target="_blank">新手设计系统资料库</a>
-      </div>
-
-      <div class="link">
-        <a href="https://andreasbm.github.io/web-skills/" target="_blank">互联网技能树</a>
-      </div>
-    </div> -->
-
     <List size="small" :loading="listLoading" :data-source="questionList" bordered>
       <template #renderItem="{ item }">
         <ListItem :key="`a-${item.id}`">
           <template #actions>
-            <div
+            <!-- <div
               class="icon-[gg--add] hidden add-btn"
               @click="router.push({ path: '/add', query: { type: item.name } })"
-            ></div>
+            ></div> -->
+            <Icon
+              icon="subway:add"
+              class="hidden add-btn cursor-pointer text-[#358dd7]"
+              @click="router.push({ path: '/add', query: { type: item.name } })"
+            />
           </template>
           <ListItemMeta>
             <template #description>
@@ -35,7 +29,7 @@
               <a>{{ item.name }}</a>
             </template>
             <template #avatar>
-              <div :class="[`${iconMap[item.name]}`, 'text-2xl']" />
+              <Icon :icon="iconMap[item.name]" class="text-2xl" />
             </template>
           </ListItemMeta>
         </ListItem>
@@ -45,9 +39,9 @@
 </template>
 
 <script setup lang="ts">
-// import ChatAI from './ChatAI.vue'
 import { fetchInterviewQuestions } from '@/api'
 import { List, ListItemMeta, ListItem } from 'ant-design-vue'
+import { Icon } from '@iconify/vue'
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -64,20 +58,20 @@ interface Question {
 const router = useRouter()
 
 const iconMap: any = {
-  Vue: 'icon-[logos--vue]',
-  JS: 'icon-[vscode-icons--file-type-js]',
-  TS: 'icon-[vscode-icons--file-type-typescriptdef]',
-  HTML: 'icon-[devicon--html5]',
-  CSS: 'icon-[devicon--css3-plain]',
-  Vite: 'icon-[devicon--vitejs]',
-  Other: 'icon-[basil--other-1-outline]',
-  Engineering: 'icon-[flat-color-icons--engineering]',
-  HandWriting: 'icon-[emojione--pencil]',
-  Network: 'icon-[emojione-v1--three-networked-computers]',
-  Project: 'icon-[fa6-solid--diagram-project]',
-  Optimization: 'icon-[carbon--promote]',
-  Visualization: 'icon-[flat-color-icons--combo-chart]',
-  React: 'icon-[devicon--react]'
+  Vue: 'logos:vue',
+  JS: 'vscode-icons:file-type-js',
+  TS: 'skill-icons:typescript',
+  HTML: 'devicon:html5',
+  CSS: 'devicon:css3',
+  Vite: 'vscode-icons:file-type-vite',
+  Other: 'material-symbols-light:other-admission-rounded',
+  Engineering: 'flat-color-icons:engineering',
+  HandWriting: 'solar:pen-linear',
+  Network: 'emojione-v1:three-networked-computers',
+  Project: 'ix:project-new',
+  Optimization: 'emojione-v1:lightning-mood',
+  Visualization: 'flat-color-icons:combo-chart',
+  React: 'devicon:react'
 }
 
 const questionList = ref<any[]>([])
