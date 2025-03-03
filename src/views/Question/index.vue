@@ -116,19 +116,6 @@ const formatData = (data: Record<string, Question[]>): any[] => {
 }
 
 /**
-* @description: 将面试题类型数据转为图标映射表
-
-*/
-// const formatIconMap = (data: QuestionType[]) => {
-//   const map: Record<string, string> = {}
-//   data.forEach((item) => {
-//     map[item.type] = item.iconType
-//   })
-
-//   return map
-// }
-
-/**
  * @description: 获取面试题数据
  */
 const fetchData = async () => {
@@ -140,14 +127,6 @@ const fetchData = async () => {
     listLoading.value = false
   }
 }
-
-/**
- * @description: 获取面试题类型数据
- */
-// const getTypeList = async () => {
-//   const res = await fetchInterviewTypes()
-//   iconMap.value = formatIconMap(res.data)
-// }
 
 onMounted(fetchData)
 </script>

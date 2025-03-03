@@ -62,6 +62,7 @@ import logoHandWriting from '@/assets/svgIcon/handwriting.svg'
 import logoProject from '@/assets/svgIcon/project.svg'
 import logoTS from '@/assets/svgIcon/ts.svg'
 import logoOther from '@/assets/svgIcon/other.svg'
+import logoDocker from '@/assets/svgIcon/docker.svg'
 
 /**
  * @description: 在本节中显示的框架和工具
@@ -154,6 +155,13 @@ const frameworks: Framework[] = [
   {
     name: 'React',
     logo: logoReact,
+    color: '#00d6fd',
+    url: '',
+    visible: ref(false)
+  },
+  {
+    name: 'Docker',
+    logo: logoDocker,
     color: '#00d6fd',
     url: '',
     visible: ref(false)

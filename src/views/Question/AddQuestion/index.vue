@@ -25,14 +25,39 @@
       <Editor @save-handler="saveQuestion" :defaultValue="defaultValue" />
     </div>
   </Spin>
+
+  <!-- 提交 -->
+  <Modal
+    v-model:open="modalVisible"
+    centered
+    title="请选择问题类型"
+    ok-text="提交"
+    cancel-text="取消"
+    @ok="createArticle"
+    @cancel="imgName = ''"
+  >
+    <div class="grid grid-cols-8 gap-4 pt-8 pb-8">
+      <img
+        @click="imgName = item.icon"
+        :class="[
+          `w-[30px] h-[30px] cursor-pointer`,
+          imgName === item.icon ? 'border-1 border-[#0d9488]' : ''
+        ]"
+        v-for="item in iconList"
+        :key="item.icon"
+        :src="item.url"
+        :alt="item.icon"
+      />
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts" setup>
 import Editor from '@/components/Editor/index.vue'
 import dayjs from 'dayjs'
 import { Icon } from '@iconify/vue'
-import { addInterviewQuestion, updateInterviewQuestion } from '@/api'
-import { Input, message, Spin } from 'ant-design-vue'
+import { addInterviewQuestion, fetchInterviewTypes, updateInterviewQuestion } from '@/api'
+import { Input, message, Spin, Modal } from 'ant-design-vue'
 
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -50,6 +75,10 @@ const QUESTION_LOCAL_ID = 'question-detail-info'
 
 const inputRef = ref()
 const defaultValue = ref('')
+const modalVisible = ref(false)
+const cacheEditorValue = ref('')
+const iconList = ref<{ icon: string; url: string }[]>([])
+const imgName = ref('')
 
 const route = useRoute()
 const titleValue = ref('')
@@ -57,6 +86,30 @@ const cacheTitle = ref('请输入标题')
 const isEditor = ref(false)
 const submitLoading = ref(false)
 const detailInfo = ref<Partial<Question>>({})
+
+/**
+ * @description: 创建文章
+ */
+const createArticle = () => {
+  if (!titleValue.value) return message.warn('请输入标题')
+  saveQuestion(cacheEditorValue.value)
+  cacheEditorValue.value = ''
+  modalVisible.value = false
+}
+
+/**
+ * @description: 获取面试题类型数据
+ */
+const getTypeList = async () => {
+  const res = await fetchInterviewTypes()
+  iconList.value = (res.data || []).map((item: any) => {
+    return {
+      icon: item.type,
+      url: new URL(`../../../assets/svgIcon/${item.type.toLocaleLowerCase()}.svg`, import.meta.url)
+        .href
+    }
+  })
+}
 
 /**
  * @description: 失去焦点时保存标题
@@ -81,6 +134,7 @@ const transformEditor = async () => {
 }
 
 const saveQuestion = async (editorValue: string) => {
+  cacheEditorValue.value = editorValue
   if (!titleValue.value) return message.warn('请输入标题')
   if (!editorValue || editorValue === '\n') return message.warn('请输入答案')
 
@@ -97,9 +151,14 @@ const saveQuestion = async (editorValue: string) => {
       return message.success('修改成功')
     }
 
+    if (!route.query.type && !imgName.value) {
+      modalVisible.value = true
+      return
+    }
+
     await addInterviewQuestion({
       title: titleValue.value,
-      type: route.query.type as string,
+      type: (route.query.type as string) || imgName.value,
       answer: editorValue,
       createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       updatedAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
@@ -124,6 +183,10 @@ onMounted(() => {
     } catch (error) {
       console.log('error', error)
     }
+  }
+
+  if (!route.query.type && !imgName.value) {
+    getTypeList()
   }
 })
 </script>

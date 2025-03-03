@@ -23,6 +23,8 @@ import theme from './utils/theme'
   display: flex;
   flex-direction: column;
   color: #fff;
+  height: 100%;
+  background-color: #fff;
 
   .view {
     margin-top: 73px;
