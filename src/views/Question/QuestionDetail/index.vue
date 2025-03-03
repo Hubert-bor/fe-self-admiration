@@ -2,12 +2,11 @@
   <Spin :spinning="getDetailLoading">
     <FloatButton tooltip="编辑" @click="goAddPage">
       <template #icon>
-        <div class="icon-[uil--edit] mt-[3px] mr-[3px] translate-x-[-2px]" />
-        <!-- <div class="icon-[mynaui--save] mt-[3px] mr-[3px] translate-x-[-2px]" /> -->
+        <Icon icon="mage:edit" />
       </template>
     </FloatButton>
     <div class="vditor-detail-wrapper">
-      <div class="text-center p-3 font-mono font-bold">{{ detail.title }}</div>
+      <div class="text-[#000] text-center p-3 font-mono font-bold">{{ detail.title }}</div>
       <div id="vditor-detail" />
     </div>
   </Spin>
@@ -19,6 +18,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { Spin, FloatButton } from 'ant-design-vue'
 import Vditor from 'vditor'
+import { Icon } from '@iconify/vue'
 
 import 'vditor/dist/index.css'
 

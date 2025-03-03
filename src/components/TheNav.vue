@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex px-8 py-4 font-black gray-400/10 gap-2 items-center border-b-1 border-[#9ca3af1a]"
+    class="fixed top-0 left-0 right-0 z-10 flex px-8 py-4 font-black gray-400/10 gap-2 items-center border-b-1 border-[#9ca3af1a]"
   >
     <RouterLink to="/" class="flex gap-2 items-center font-normal leading-4">
       <img src="../assets/svgIcon/logo.svg" class="h-10" />

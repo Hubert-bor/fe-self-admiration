@@ -2,7 +2,7 @@
   <header class="navbar">
     <div class="container navbar-container">
       <div class="logo">
-        <img src="@/assets/logo.svg" alt="Logo" class="logo-image" />
+        <img src="" alt="Logo" class="logo-image" />
         <h1 class="logo-text">Vue3 App</h1>
       </div>
 

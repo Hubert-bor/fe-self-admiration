@@ -8,12 +8,10 @@
       <!-- <TheImageContainer /> -->
     </div>
   </div>
-  <HomeFooter />
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import HomeFooter from './components/HomeFooter.vue'
 import TheNav from './components/TheNav.vue'
 import { ConfigProvider } from 'ant-design-vue'
 // import { TheImageContainer } from './composables/image'
@@ -24,11 +22,10 @@ import theme from './utils/theme'
 .page {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 50px);
   color: #fff;
 
   .view {
-    overflow-x: overlay;
+    margin-top: 73px;
   }
 
   :deep([class^='icon-']) {
