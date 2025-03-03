@@ -7,7 +7,7 @@
     class="framework-card"
     :style="{ '--glow-color': props.framework.color }"
     :class="{ active: props.framework.visible.value === true }"
-    @click="props.framework.logo && router.push('/question')"
+    @click="props.framework.logo && router.push(`/question?framework=${framework.name}`)"
   >
     <img v-if="props.framework.logo" :src="props.framework.logo" :alt="props.framework.name" />
   </component>

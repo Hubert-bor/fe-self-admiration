@@ -6,7 +6,11 @@
       </template>
     </FloatButton>
     <div class="vditor-detail-wrapper">
-      <div class="text-[#000] text-center p-3 font-mono font-bold">{{ detail.title }}</div>
+      <div
+        class="text-[#000] sticky z-5 top-[73px] border-b-1 border-[#9ca3af1a] bg-[#fff] text-center p-3 font-mono font-bold"
+      >
+        {{ detail.title }}
+      </div>
       <div id="vditor-detail" />
     </div>
   </Spin>
@@ -73,7 +77,7 @@ onMounted(async () => {
     detail.value = res.data
 
     vditorDetail = new Vditor('vditor-detail', {
-      height: 'calc(100vh - 170px)',
+      // height: 'calc(100vh - 170px)',
       // mode: 'sv',
       toolbarConfig: {
         pin: true,
@@ -97,8 +101,8 @@ onMounted(async () => {
 :deep(.ant-spin) {
   max-height: none !important;
 }
+
 .vditor-detail-wrapper {
-  height: calc(100vh - 124px);
   :deep(.vditor-toolbar) {
     display: none;
   }
@@ -110,6 +114,6 @@ onMounted(async () => {
 }
 
 :deep(.ant-float-btn) {
-  inset-block-end: 90px;
+  inset-block-end: 60px;
 }
 </style>

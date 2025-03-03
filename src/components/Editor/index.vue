@@ -23,7 +23,7 @@ let vditor: any
 const initVditor = () => {
   const options = {
     width: '100%',
-    height: 'calc(100vh - 190px)',
+    height: 'calc(100vh - 137px)',
     tab: '\t',
     counter: '999999',
     typewriterMode: true,

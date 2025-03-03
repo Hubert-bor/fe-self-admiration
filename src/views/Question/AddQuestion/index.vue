@@ -9,8 +9,10 @@
         placeholder="请输入标题"
         @blur="inputBlur"
       />
-      <div v-else class="text-sm font-mono flex items-center justify-center">
-        <div class="text-[#000] mr-2 max-w-[300px] truncate">{{ titleValue || cacheTitle }}</div>
+      <div v-else class="text-sm font-mono flex items-center justify-center translate-y-[8px]">
+        <div class="text-[#000] mr-2 max-w-[300px] truncate">
+          {{ titleValue || cacheTitle }}
+        </div>
         <Icon
           icon="mage:edit"
           class="cursor-pointer align-middle text-[#000] mt-[-3px] text-xl hover:text-[#0d9488]"
@@ -133,6 +135,13 @@ onMounted(() => {
   &:focus {
     width: 500px;
     transition: all 0.3s ease; /* 平滑过渡 transform */
+  }
+
+  @media (max-width: 768px) {
+    &:focus {
+      width: 200px;
+      transition: all 0.3s ease; /* 平滑过渡 transform */
+    }
   }
 }
 
