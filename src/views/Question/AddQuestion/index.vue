@@ -60,7 +60,7 @@ import { addInterviewQuestion, fetchInterviewTypes, updateInterviewQuestion } fr
 import { Input, message, Spin, Modal } from 'ant-design-vue'
 
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 interface Question {
   id: number
@@ -81,6 +81,8 @@ const iconList = ref<{ icon: string; url: string }[]>([])
 const imgName = ref('')
 
 const route = useRoute()
+const router = useRouter()
+
 const titleValue = ref('')
 const cacheTitle = ref('请输入标题')
 const isEditor = ref(false)
@@ -164,6 +166,10 @@ const saveQuestion = async (editorValue: string) => {
       updatedAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
     })
     message.success('添加成功')
+    router.push({
+      path: '/question',
+      query: { framework: (route.query.type as string) || imgName.value }
+    })
   } finally {
     submitLoading.value = false
   }
